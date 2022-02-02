@@ -1,0 +1,41 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}This is an example page{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" language="javascript" src={{url_for("static",filename="JSME_2021-07-13/jsme/jsme.nocache.js")}}></script>
+
+<script>
+        //this function will be called after the JavaScriptApplet code has been loaded.
+        function jsmeOnLoad() {
+
+            jsmeApplet = new JSApplet.JSME("jsme_container", "380px", "340px", {
+                "options": "oldlook,marker,markAtomOnly,nocanonize"
+            });
+        }
+</script>
+
+<script type="text/javascript" language="javascript">
+    function getSmiles() {
+      var smi = jsmeApplet.smiles();
+      let smiText = document.getElementById('smiles');
+      smiText.value = smi;
+    }
+</script>
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  <!-- ... -->
+</div>
+{% endblock %}
+
+{% block content %}
+  <h1>Hello, Bootstrap</h1>
+  <div id="jsme_container"></div>
+  <form method="POST" action="/">
+    <input type="hidden" name="smiles" id="smiles">
+    <!-- <input type="button" value="Get smiles via document.JME" onclick="alert(document.JME.smiles());"> -->
+    <!-- <input type="button" name="submitbutton" value="Get smiles via document.JME" onclick="document.JME.smiles();"> -->
+    <input type="submit" onclick=getSmiles(); value="Get smiles via document.JME">
+  </form>
+{% endblock %}
